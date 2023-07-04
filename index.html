@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>To-Do List</title>
+  <!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
+  <style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #b4ce7d8c;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    margin-bottom: 23px;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .form {
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    
+  }
+  .desc{
+    border:none;
+    
+  }
+  #itemDescInput{
+    width: 918px;
+    margin-bottom: 34px;
+  }
+  
+  input[type="text"] {
+    width: 900px;
+    padding: 10px;
+    font-size: 16px;
+    /* border: none; */
+    border-radius: 5px 0 0 5px;
+    margin-right: 10px;
+  }
+  
+  button {
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: #25cb2a;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #f9f9f9;
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .delete-btn {
+    color: red;
+    cursor:pointer;
+ }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>To-Do List</h1>
+    <div class="form">
+    
+      <input type="text" id="itemNameInput" placeholder="Item Name"></div>
+    <div class="desc">
+        <textarea id="itemDescInput" rows="4" cols="50" placeholder="Description"></textarea>
+      </div>
+      <button onclick="addItem()">Add to List</button>
+      <button onclick="clearList()">Clear List</button>
+    </div>
+    <table id="taskTable" >
+      <thead>
+        <tr>
+          <th>Sl. No.</th>
+          <th>Item Name</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="taskList"></tbody>
+    </table>
+  </div>
+
+  <script >
+    var serialNo = 1;
+
+function addItem() {
+  var itemNameInput = document.getElementById("itemNameInput");
+  var itemDescInput = document.getElementById("itemDescInput");
+  var taskList = document.getElementById("taskList");
+  var taskRow = document.createElement("tr");
+
+  var serialCell = document.createElement("td");
+  serialCell.textContent = serialNo++;
+
+  var nameCell = document.createElement("td");
+  nameCell.textContent = itemNameInput.value;
+
+  var descCell = document.createElement("td");
+  descCell.textContent = itemDescInput.value;
+
+  var actionsCell = document.createElement("td");
+  var deleteBtn = document.createElement("span");
+  deleteBtn.innerHTML = "&#10005;";
+  deleteBtn.classList.add("delete-btn");
+  deleteBtn.addEventListener("click", function() {
+    taskRow.remove();
+  });
+
+  actionsCell.appendChild(deleteBtn);
+
+  taskRow.appendChild(serialCell);
+  taskRow.appendChild(nameCell);
+  taskRow.appendChild(descCell);
+  taskRow.appendChild(actionsCell);
+  taskList.appendChild(taskRow);
+
+  itemNameInput.value = "";
+  itemDescInput.value = "";
+}
+
+function clearList() {
+  var taskList = document.getElementById("taskList");
+  taskList.innerHTML = "";
+  serialNo = 1;
+}
+  </script>
+</body>
+</html>
